@@ -11,10 +11,13 @@ import pymysql  # mysql과 연동시켜주는 라이브러리
 dbConn = pymysql.connect(host='localhost', user='root', password='12345', db='shopdb')
 # 파이썬과 mysql간의 connection 생성
 
-sql = "INSERT INTO membertbl VALUES ('Lion','김사자','인천 미추홀구')"  # DB에 실행할 SQL문 생성
+sql = "INSERT INTO membertbl VALUES ('WhiteCat2','김고양','인천 미추홀구')"  # DB에 실행할 SQL문 생성
 
 cur = dbConn.cursor()
-cur.execute(sql)  # 연결된 DB의 스키마에 지정된 SQL문이 실행됨
+result = cur.execute(sql)  # 연결된 DB의 스키마에 지정된 SQL문이 실행됨
+# insert, update, delete 문이 실행된 후 성공결과를 반환해줌->1이면 성공!!
+if result == 1:
+    print("회원 가입이 성공하였습니다!")
 
 # records = cur.fetchall()  # sql문에서 실행된 select문의 결과를 records로 받음(튜플로 반환됨)
 
