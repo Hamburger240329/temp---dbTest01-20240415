@@ -24,7 +24,7 @@ if result == 1:
 
 # dbConn 의 사용이 종료된 후에는 반드시 닫아줄 것!(close:cur먼저 닫고 dbConn을 닫아야 함)
 cur.close()
-dbConn.commit()  # insert, delete, update 문을 사용한 경우에는 반드시 commint 함수를 호출해야함!!!!!
+dbConn.commit()  # insert, delete, update 문을 사용한 경우에는 반드시 commit 함수를 호출해야함!!!!!
 dbConn.close()
 
 
