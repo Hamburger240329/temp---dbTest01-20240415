@@ -4,7 +4,7 @@ import pymysql  # mysql과 연동시켜주는 라이브러리
 # 1) 계정 : root(관리자 계정)
 # 2) 비밀번호 : 12345
 # 3) 데이터베이스가 설치된 컴퓨터의 IP주소
-#   - 본인 컴퓨터면 localhost, 다른컴퓨터면 그 컴퓨터의 ip주소
+#   - 본인 컴퓨터면 localhost, 다른 컴퓨터면 그 컴퓨터의 ip주소
 #   - 192.168.0.100(교수용 컴퓨터 ip)
 # 4) 데이터베이스 스키마 이름(ex:shopdb)
 
@@ -23,7 +23,8 @@ print(records[0])  # 특정 레코드(1행)
 print(records[0][1])  # 특정 레코드의 특정 값(ex:이순신)
 
 for member in records:
-    print(member)
+    print(member)  # 레코드 단위로 출력
+    print(member[0])  # 아이디만 추출하여 출력
 
 # dbConn 의 사용이 종료된 후에는 반드시 닫아줄 것!(close:cur먼저 닫고 dbConn을 닫아야 함)
 cur.close()
