@@ -23,21 +23,28 @@ class MainWindow(QMainWindow, form_class):
         memberemail = self.joinemail_edit.text()  # 유저가 입력한 회원이메일 텍스트 가져오기
         memberage = self.joinage_edit.text()  # 유저가 입력한 회원나이 텍스트 가져오기
 
-        dbConn = pymysql.connect(user="root", password="12345", host="localhost", db="shopdb")
-
-        sql = f"INSERT INTO appmember VALUES('{memberid}','{memberpw}','{membername}','{memberemail}','{memberage}')"
-
-        cur = dbConn.cursor()
-        result = cur.execute(sql)  # 회원가입하는 sql문이 성공하면 1이 반환
-        
-        if result == 1:
-            QMessageBox.warning(self, "회원가입성공","축하합니다.\n회원가입이 성공하셨습니다.")
-            self.join_reset()  # 회원가입 성공 ok 클릭 후 입력내용 초기화
+        if memberid == "" or memberpw == "" or membername == "" or memberemail == "" or memberage == "":
+            QMessageBox.warning(self, "정보입력오류", "입력 정보 중 한개라도 누락되면 회원가입이 되지 않습니다.\n다시 입력해주세요.")
+        elif len(memberid) < 4 or len(memberid) >= 15:
+            QMessageBox.warning(self, "아이디길이오류", "아이디는 4자 이상 14자 이하이어야 합니다.\n다시 입력해주세요.")
+        elif len(memberpw) < 4 or len(memberpw) >= 15:
+            QMessageBox.warning(self, "비밀번호길이오류", "비밀번호는 4자 이상 14자 이하이어야 합니다.\n다시 입력해주세요.")
         else:
-            QMessageBox.warning(self, "회원가입실패", "회원가입이 실패하셨습니다.")
-        cur.close()
-        dbConn.commit()
-        dbConn.close()
+            dbConn = pymysql.connect(user="root", password="12345", host="localhost", db="shopdb")
+
+            sql = f"INSERT INTO appmember VALUES('{memberid}','{memberpw}','{membername}','{memberemail}','{memberage}')"
+
+            cur = dbConn.cursor()
+            result = cur.execute(sql)  # 회원가입하는 sql문이 성공하면 1이 반환
+
+            if result == 1:
+                QMessageBox.warning(self, "회원가입성공","축하합니다.\n회원가입이 성공하셨습니다.")
+                self.join_reset()  # 회원가입 성공 ok 클릭 후 입력내용 초기화
+            else:
+                QMessageBox.warning(self, "회원가입실패", "회원가입이 실패하셨습니다.")
+            cur.close()
+            dbConn.commit()
+            dbConn.close()
 
     def join_reset(self):  # 회원가입정보 입력내용 초기화
         self.joinid_edit.clear()
