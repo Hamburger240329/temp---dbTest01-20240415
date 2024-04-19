@@ -332,6 +332,9 @@ color: rgb(255, 255, 255);</string>
         <height>20</height>
        </rect>
       </property>
+      <property name="echoMode">
+       <enum>QLineEdit::Password</enum>
+      </property>
      </widget>
      <widget class="QPushButton" name="membersearch_btn">
       <property name="geometry">
