@@ -45,6 +45,32 @@ while True:
         cur.close()
         dbConn.commit()
 
+    elif menuNum == "3":
+        memberID = input("1) 회원 탈퇴할 회원아이디를 입력하세요 :")
+
+        sql = f"DELETE FROM membertbl WHERE memberID='{memberID}'"
+        cur = dbConn.cursor()
+        result = cur.execute(sql)
+        if result == 1:
+            print("회원탈퇴가 성공하셨습니다. 안녕히 가세요.")
+        else:
+            print("회원탈퇴 실패입니다.")
+
+        cur.close()
+        dbConn.commit()
+
+    elif menuNum == "4":
+        sql = "SELECT * FROM membertbl"
+
+        cur = dbConn.cursor()
+        cur.execute(sql)
+        memberList = cur.fetchall()  # select문의 결과를 반환(튜플)
+
+        print("********* 회원 리스트 **********")
+        for member in memberList:
+            print(member[0], end=" / ")
+            print(member[1], end=" / ")
+            print(member[2])
 
     elif menuNum == "5":
         print("프로그램을 종료합니다. 안녕히 가세요!")
