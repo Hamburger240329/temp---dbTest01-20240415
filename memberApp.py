@@ -30,6 +30,8 @@ class MainWindow(QMainWindow, form_class):
             QMessageBox.warning(self, "아이디길이오류", "아이디는 4자 이상 14자 이하이어야 합니다.\n다시 입력해주세요.")
         elif len(memberpw) < 4 or len(memberpw) >= 15:
             QMessageBox.warning(self, "비밀번호길이오류", "비밀번호는 4자 이상 14자 이하이어야 합니다.\n다시 입력해주세요.")
+        elif self.idcheck() == 0:  # 가입불가
+            pass
         else:
             dbConn = pymysql.connect(user="root", password="12345", host="localhost", db="shopdb")
 
@@ -76,8 +78,10 @@ class MainWindow(QMainWindow, form_class):
 
             if result[0][0] == 1:
                 QMessageBox.warning(self, "회원가입불가", "이미 가입된 아이디입니다.\n다시 입력해주세요.")
+                return 0
             else:
                 QMessageBox.warning(self, "회원가입가능", "가입 가능한 아이디입니다.\n계속해서 가입을 진행해주세요.")
+                return 1
 
             cur.close()
             dbConn.close()
