@@ -13,6 +13,7 @@ class MainWindow(QMainWindow, form_class):
         self.setWindowTitle("회원 관리 프로그램")
 
         self.join_btn.clicked.connect(self.member_join)  # 회원가입이 버튼이 클릭되면 가입함수 호출
+        self.joinreset_btn.clicked.connect(self.join_reset)  # 초기화 버튼이 클릭되면 입력내용 초기화
 
 
     def member_join(self):  # 회원 가입 이벤트 처리 함수
@@ -28,10 +29,23 @@ class MainWindow(QMainWindow, form_class):
 
         cur = dbConn.cursor()
         result = cur.execute(sql)  # 회원가입하는 sql문이 성공하면 1이 반환
-
+        
+        if result == 1:
+            QMessageBox.warning(self, "회원가입성공","축하합니다.\n회원가입이 성공하셨습니다.")
+            self.join_reset()  # 회원가입 성공 ok 클릭 후 입력내용 초기화
+        else:
+            QMessageBox.warning(self, "회원가입실패", "회원가입이 실패하셨습니다.")
         cur.close()
         dbConn.commit()
         dbConn.close()
+
+    def join_reset(self):  # 회원가입정보 입력내용 초기화
+        self.joinid_edit.clear()
+        self.joinpw_edit.clear()
+        self.joinname_edit.clear()
+        self.joinemail_edit.clear()
+        self.joinage_edit.clear()
+
 
 
 app = QApplication(sys.argv)
